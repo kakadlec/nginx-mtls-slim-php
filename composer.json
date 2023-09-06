@@ -1,0 +1,19 @@
+{
+  "name": "ebx/ngnix-php-mtls",
+  "description": "",
+  "authors": [
+    {
+      "name": "Karel Kadlec",
+      "email": "kakadlec@gmail.com"
+    }
+  ],
+  "scripts": {
+    "test": [
+      "vendor/bin/phpunit"
+    ]
+  },
+  "require": {
+    "slim/slim": "^4.12",
+    "slim/psr7": "^1.6"
+  }
+}

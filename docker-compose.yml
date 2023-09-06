@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: app-mtls-php
+    image: kakadlec/php
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - pay_default
+
+  nginx:
+    image: nginx:latest
+    environment:
+      - VIRTUAL_HOST=mtls.local
+    container_name: app-mtls-nginx
+    ports:
+      - "444:443"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./certs/ca.crt:/etc/nginx/mtls/ca.crt
+      - ./certs/server.key:/etc/nginx/certs/tls.key
+      - ./certs/server.crt:/etc/nginx/certs/tls.crt
+      - ./certs/passphrase.txt:/etc/nginx/certs/password
+    networks:
+      - pay_default
+
+networks:
+  pay_default:
+    external: true
